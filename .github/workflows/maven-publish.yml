@@ -1,0 +1,41 @@
+name: Spring Boot CI/CD
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up JDK
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21' # Update based on your project
+          distribution: 'adopt'
+          cache: maven
+
+      # Step 3: Build with Maven
+      - name: Build with Maven
+        run: |
+          mvn -B package --file pom.xml
+          mkdir artifacts
+          cp target/*.jar artifacts
+          ls artifacts
+
+      # Step 4: Save artifact
+      - name: Save artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: github-actions-artifact
+          path: artifacts
