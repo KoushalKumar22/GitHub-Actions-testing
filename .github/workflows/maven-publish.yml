@@ -17,9 +17,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
         options: >-
           --health-cmd="pg_isready -U test_user -d test_db"
           --health-interval=10s
